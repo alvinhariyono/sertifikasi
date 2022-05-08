@@ -2,12 +2,11 @@
 // include database connection file
 session_start();
 include_once("../model/config.php");
-$stok_id = $_GET['stok_id'];
+//$stok_id = $_GET['stok_id'];
 $message = "ada di sini";
 
 // Check if form is submitted for user update, then redirect to homepage after update
 if (isset($_POST['update'])) {
-
     $stok_id = $_POST['stok_id'];
     $stok_nama = $_POST['stok_nama'];
     $stok_kode = $_POST['stok_kode'];
@@ -15,19 +14,17 @@ if (isset($_POST['update'])) {
     $stok_peminjam = $_POST['stok_peminjam'];
     $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
     $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
-
+    $user_id = $_POST['user_id'];
 
     // update book data
-    $result = mysqli_query(
-        $mysqli,
-        "UPDATE stok SET stok_status  = 'unavailable', stok_peminjam = '$stok_peminjam',  tanggal_peminjaman  ='$tanggal_peminjaman',tanggal_pengembalian ='$tanggal_pengembalian'  WHERE stok_id=$stok_id"
-    );
+    $result = mysqli_query($mysqli, "UPDATE 'stok' SET stok_status  = 'unavailable', stok_peminjam = '$stok_peminjam',  tanggal_peminjaman  ='$tanggal_peminjaman',tanggal_pengembalian ='$tanggal_pengembalian'  WHERE stok.stok_id='$stok_id'");
+
+
 
     // Redirect to homepage to display updated user in list
     header("Location: mainpage.php");
-} else {
-    // echo "<script type='text/javascript'>alert('$message');</script>";
 }
+//else {     echo "<script type='text/javascript'>alert('$message');</script>";}
 
 ?>
 <?php
@@ -35,7 +32,7 @@ if (isset($_POST['update'])) {
 // Display selected book data based on id
 // Getting id from url
 session_start();
-include_once("../model/config.php");
+
 $stok_id = $_GET['stok_id'];
 
 // Fetech user data based on id
@@ -52,6 +49,7 @@ while ($book_data = mysqli_fetch_array($result)) {
     $stok_peminjam = $book_data['stok_peminjam'];
     $tanggal_peminjaman = date("d-m-Y");
     $tanggal_pengembalian =  date('d-m-Y', $date);
+    $user_id = $book_data['user_id'];
 }
 ?>
 <html>
@@ -79,7 +77,7 @@ while ($book_data = mysqli_fetch_array($result)) {
     $date = strtotime("+7 day");
     echo date('d-m-Y', $date);
     ?>
-    <form name="update_user" method="post" action="pinjam.php">
+    <form name="update_pinjam" method="post" action="pinjam.php">
         <table border="0">
             <tr>
                 <td>stok_id</td>

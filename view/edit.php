@@ -66,7 +66,7 @@ while ($book_data = mysqli_fetch_array($result)) {
 	<a href="mainpage.php">back to Home Page</a>
 	<br /><br />
 
-	<form name="update_user" method="post" action="edit.php">
+	<form name="update_buku" method="post" action="edit.php">
 		<table border="0">
 			<tr>
 				<td>stok_id</td>
@@ -99,7 +99,7 @@ while ($book_data = mysqli_fetch_array($result)) {
 
 			<tr>
 				<!-- <td><input type="hidden" name="stok_id" value="<?php echo $_GET['stok_id']; ?>"></td> -->
-				<td><input type="submit" name="update" value="update"></td>
+				<td><input type="submit" name='update' value="update"></td>
 			</tr>
 		</table>
 	</form>
