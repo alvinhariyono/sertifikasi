@@ -1,3 +1,7 @@
+<html>
+<h1>KEMBALIKAN PAGE</h1>
+
+</html>
 <?php
 // include database connection file
 session_start();

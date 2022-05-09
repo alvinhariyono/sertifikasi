@@ -9,4 +9,4 @@ $stok_id = $_GET['stok_id'];
 $result = mysqli_query($mysqli, "DELETE FROM stok WHERE stok_id=$stok_id");
 
 // After delete redirect to Home, so that latest user list will be displayed.
-header("Location: mainpage.php");
+header("Location:  ../view/recycle_bin.php");

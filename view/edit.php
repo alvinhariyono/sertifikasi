@@ -1,3 +1,7 @@
+<html>
+<h1>EDIT PAGE</h1>
+
+</html>
 <?php
 // include database connection file
 
@@ -16,9 +20,7 @@ if (isset($_POST['update'])) {
 	// update book data
 	$result = mysqli_query(
 		$mysqli,
-		"UPDATE stok SET stok_id='$stok_id',stok_nama='$stok_nama',stok_kode='$stok_kode' ,
-	stok_status='$stok_status' ,stok_peminjam='$stok_peminjam',tanggal_peminjaman='$tanggal_peminjaman',
-	tanggal_pengembalian ='$tanggal_pengembalian ' WHERE stok_id=$stok_id"
+		"UPDATE `stok` SET `stok_id` = '$stok_id ', `stok_nama` = '$stok_nama', `stok_kode` = '$stok_kode', `stok_status` = '$stok_status', `stok_peminjam` = '$stok_peminjam', `stok_delete` = '0' WHERE `stok`.`stok_id` = '$stok_id'"
 	);
 
 	// Redirect to homepage to display updated user in list
@@ -97,8 +99,9 @@ while ($book_data = mysqli_fetch_array($result)) {
 				<td><input type="text" size=100 name="tanggal_pengembalian" value="<?php echo $tanggal_pengembalian; ?>"></td>
 			</tr>
 
+
 			<tr>
-				<!-- <td><input type="hidden" name="stok_id" value="<?php echo $_GET['stok_id']; ?>"></td> -->
+				<td><input type="hidden" name="stok_id" value="<?php echo $_GET['stok_id']; ?>"></td>
 				<td><input type="submit" name='update' value="update"></td>
 			</tr>
 		</table>

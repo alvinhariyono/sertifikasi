@@ -1,5 +1,5 @@
 <html>
-<h1>HOME PAGE</h1>
+<h1>RECYLE BIN</h1>
 
 </html>
 <?php
@@ -7,11 +7,12 @@ session_start();
 echo "Hai, " . $_SESSION['user_login'];
 include_once("../model/config.php");
 
-$result = mysqli_query($mysqli, "SELECT * FROM stok where stok_delete = '0' ORDER BY stok_id ASC");
-
+$result = mysqli_query($mysqli, "SELECT * FROM stok where stok_delete = '1' ORDER BY stok_id ASC");
 
 ?>
 <html>
+<title>RECYLE BIN</title>
+
 <a class="btn btn-primary" href="../index.php?logout=true">Logout</a>
 <br>
 
@@ -21,19 +22,17 @@ $result = mysqli_query($mysqli, "SELECT * FROM stok where stok_delete = '0' ORDE
 <html>
 
 <head>
-    <title>Home page</title>
+    <title>Rcycle bin</title>
 </head>
 
 <body>
-    <a href="add.php">Add books</a><br />
-    <!--
-    <a href="add_user.php">Add user</a><br />
--->
-    <a href="recycle_bin.php">Recycle bin</a><br /> <br />
+
+
+    <a href="mainpage.php">back to Home Page</a><br /> <br />
     <table width='80%' border=1>
 
         <tr>
-            <th>Stok_id</th>
+            <th>stok_id</th>
             <th>Image</th>
             <th>judul buku</th>
             <th>kode buku</th>
@@ -41,11 +40,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM stok where stok_delete = '0' ORDE
             <th>nama peminjam</th>
             <th>tanggal peminjaman</th>
             <th>tanggal pengembalian</th>
-            <th>ID admin pengurus</th>
+            <th>no admin pengurus</th>
         </tr>
         <?php
         while ($book_data = mysqli_fetch_array($result)) {
-
             echo "<tr>";
             echo "<td>" . $book_data['stok_id'] . "</td>";
             echo "<td>" . "<img src='../upload/" . $book_data['stok_image'] . "' height='130' width='150' >" . "</td>";
@@ -56,8 +54,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM stok where stok_delete = '0' ORDE
             echo "<td>" . $book_data['tanggal_peminjaman'] . "</td>";
             echo "<td>" . $book_data['tanggal_pengembalian'] . "</td>";
             echo "<td>" . $book_data['user_id'] . "</td>";
-            echo "<td> <a href='pinjam.php?stok_id=$book_data[stok_id]'>Pinjam</a>|<a href='kembalikan.php?stok_id=$book_data[stok_id]'>Kembalikan</a> |<a href='edit.php?stok_id=$book_data[stok_id]'>Edit</a> | <a href='../model/sent_to_bin.php?stok_id=$book_data[stok_id]'>Delete</a></td></tr>";
+            echo "<td> <a href='../model/urungkan_delete.php?stok_id=$book_data[stok_id]'>Urungkan delete</a> | <a href='../model/delete.php?stok_id=$book_data[stok_id]'>Delete Permanen</a></td></tr>";
         }
+
+
         ?>
     </table>
 

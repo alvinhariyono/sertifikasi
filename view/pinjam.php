@@ -1,3 +1,7 @@
+<html>
+<h1>PINJAM</h1>
+
+</html>
 <?php
 // include database connection file
 session_start();
@@ -142,7 +146,7 @@ while ($book_data = mysqli_fetch_array($result)) {
                 <td><input type="hidden" name="user_id" value="<?php echo $user_login_id; ?>"></td>
 
                 <td><input type="hidden" name="stok_id" value="<?php echo $_GET['stok_id']; ?>"></td>
-                <td><input type="submit" name="update" value="Update"></td>
+                <td><input type="submit" name="update" value="Pinjam"></td>
 
             </tr>
         </table>

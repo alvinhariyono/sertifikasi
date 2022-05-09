@@ -1,7 +1,11 @@
 <html>
+<h1>ADD BOOK PAGE</h1>
+
+</html>
+<html>
 
 <head>
-	<title>Add Users</title>
+	<title>Add book</title>
 </head>
 
 <body>
@@ -17,7 +21,7 @@
             <th>tanggal_pengembalian</th>
 -->
 
-	<form action="add.php" method="post" name="form1">
+	<form action="add.php" method="post" name="form1" enctype="multipart/form-data">
 		<table width="25%" border="0">
 			<tr>
 				<td>stok_nama</td>
@@ -28,6 +32,13 @@
 				<td><input type="text" name="stok_kode"></td>
 			</tr>
 
+			<!--
+			<tr>
+				<td>Image</td>
+				<td><input type="file" name="image" id="fileToUpload"></td>
+			</tr>
+-->
+
 			<tr>
 				<td></td>
 
@@ -36,11 +47,14 @@
 		</table>
 	</form>
 
+
+
 	<?php
 	session_start();
 	include_once("../model/config.php");
 	$array_user = $_SESSION['userlogin'];
 	$user_login_id = $array_user['user_id'];
+
 	// Check If form submitted, insert form data into users table.
 	if (isset($_POST['Submit'])) {
 		$stok_nama = $_POST['stok_nama'];
@@ -48,15 +62,20 @@
 
 		// include database connection file
 		include_once("../model/config.php");
-
 		// Insert user data into table
-		$result = mysqli_query($mysqli, "INSERT INTO stok(stok_nama,stok_kode,stok_peminjam,user_id) VALUES('$stok_nama','$stok_kode','-','$user_login_id ')");
-
+		$result = mysqli_query($mysqli, "INSERT INTO stok(stok_id,stok_nama,stok_kode,stok_peminjam,user_id,stok_delete) VALUES(NUll,'$stok_nama','$stok_kode','-','$user_login_id',0)");
 		// Show message when user added
 		echo "buku berhasil di tambah. <a href='mainpage.php'>view stok buku</a>";
 	}
+	?>
 
 
+
+
+
+
+
+	<?php
 	/*
 	// Check If form submitted, insert form data into users table.
 	if (isset($_POST['Submit'])) {
@@ -74,9 +93,11 @@
 		echo "User added successfully. <a href='mainpage.php'>View Users</a>";
 	}
 
-*/
+*/ ?>
 
-	?>
+
+
+
 </body>
 
 </html>
