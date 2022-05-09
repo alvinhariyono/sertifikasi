@@ -2,22 +2,46 @@
 // include database connection file
 session_start();
 include_once("../model/config.php");
+
+
+
+
+//memperlihatkan apakah ada isi dari session user login
+//var_dump($_SESSION['userlogin']) . "<br>";
+//echo "user_id " . $_SESSION['userlogin'] . "<br>";
+
+$array_user = $_SESSION['userlogin'];
+$user_login_id = $array_user['user_id'];
+//echo "<br>" . $user_login_id . "<br>";
+
+
+
 //$stok_id = $_GET['stok_id'];
-$message = "ada di sini";
+
 
 // Check if form is submitted for user update, then redirect to homepage after update
 if (isset($_POST['update'])) {
     $stok_id = $_POST['stok_id'];
     $stok_nama = $_POST['stok_nama'];
     $stok_kode = $_POST['stok_kode'];
-    $stok_status = $_POST['stok_status'];
+    $stok_status = 'unavailable';
     $stok_peminjam = $_POST['stok_peminjam'];
     $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
     $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
-    $user_id = $_POST['user_id'];
+    $user_id = $user_login_id;
+
+    echo $stok_id;
+    echo  $stok_nama;
+    echo  $stok_kode;
+    echo $stok_status;
+    echo $stok_peminjam;
+    echo  $tanggal_peminjaman;
+    echo  $tanggal_pengembalian;
+    echo $user_id;
+
 
     // update book data
-    $result = mysqli_query($mysqli, "UPDATE 'stok' SET stok_status  = 'unavailable', stok_peminjam = '$stok_peminjam',  tanggal_peminjaman  ='$tanggal_peminjaman',tanggal_pengembalian ='$tanggal_pengembalian'  WHERE stok.stok_id='$stok_id'");
+    $result = mysqli_query($mysqli, " UPDATE `stok` SET `stok_status` = '$stok_status', `stok_peminjam` = '$stok_peminjam', `tanggal_peminjaman` = '$tanggal_peminjaman', `tanggal_pengembalian` = '$tanggal_pengembalian', `user_id` = '$user_id' WHERE `stok`.`stok_id` = '$stok_id'");
 
 
 
@@ -38,6 +62,8 @@ $stok_id = $_GET['stok_id'];
 // Fetech user data based on id
 $result = mysqli_query($mysqli, "SELECT * FROM stok WHERE stok_id=$stok_id");
 
+
+
 $date = strtotime("+7 day");
 
 
@@ -47,10 +73,11 @@ while ($book_data = mysqli_fetch_array($result)) {
     $stok_kode = $book_data['stok_kode'];
     $stok_status = $book_data['stok_status'];
     $stok_peminjam = $book_data['stok_peminjam'];
-    $tanggal_peminjaman = date("d-m-Y");
-    $tanggal_pengembalian =  date('d-m-Y', $date);
+    $tanggal_peminjaman = date("Y-m-d");
+    $tanggal_pengembalian =  date('Y-m-d', $date);
     $user_id = $book_data['user_id'];
 }
+
 ?>
 <html>
 
@@ -72,12 +99,14 @@ while ($book_data = mysqli_fetch_array($result)) {
     <a href="mainpage.php">back to Home Page</a>
     <br /><br />
     <?php
-    echo "hari ini tanggal " . date("d-m-Y") . "<br>";
+    echo "hari ini tanggal " . date("Y-m-d") . "<br>";
     //echo $hariini;
     $date = strtotime("+7 day");
-    echo date('d-m-Y', $date);
+
+    echo "<br> ";
     ?>
-    <form name="update_pinjam" method="post" action="pinjam.php">
+
+    <form name="update" method="post" action="pinjam.php">
         <table border="0">
             <tr>
                 <td>stok_id</td>
@@ -97,7 +126,7 @@ while ($book_data = mysqli_fetch_array($result)) {
             </tr>
             <tr>
                 <td>stok_peminjam</td>
-                <td><input type="text" size=100 name="tanggal_peminjaman" value="<?php echo $stok_peminjam; ?>"></td>
+                <td><input type="text" size=100 name="stok_peminjam" value="<?php echo $stok_peminjam; ?>"></td>
             </tr>
             <tr>
                 <td>tanggal_peminjaman</td>
@@ -107,11 +136,25 @@ while ($book_data = mysqli_fetch_array($result)) {
                 <td>tanggal_pengembalian</td>
                 <td><?php echo $tanggal_pengembalian; ?></td>
             </tr>
+            <tr>
+                <td>user_id</td>
+                <td><?php echo $user_login_id; ?></td>
+            </tr>
+
+
+
 
             <tr>
+                <td><input type="hidden" name="stok_nama" value="<?php echo $stok_nama; ?>"></td>
+                <td><input type="hidden" name="stok_kode" value="<?php echo $stok_kode; ?>"></td>
+                <td><input type="hidden" name="stok_status" value="<?php echo $stok_status; ?>"></td>
+                <td><input type="hidden" name="tanggal_peminjaman" value="<?php echo date("Y-d-m"); ?>"></td>
+                <td><input type="hidden" name="tanggal_pengembalian" value="<?php echo $tanggal_pengembalian; ?>"></td>
+                <td><input type="hidden" name="user_id" value="<?php echo $user_login_id; ?>"></td>
 
                 <td><input type="hidden" name="stok_id" value="<?php echo $_GET['stok_id']; ?>"></td>
                 <td><input type="submit" name="update" value="Update"></td>
+
             </tr>
         </table>
     </form>
