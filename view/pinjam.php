@@ -3,12 +3,10 @@
 session_start();
 include_once("../model/config.php");
 
-//memperlihatkan apakah ada isi dari session user login
-//var_dump($_SESSION['userlogin']) . "<br>";
-//echo "user_id " . $_SESSION['userlogin'] . "<br>";
+// isi dari session user login
 $array_user = $_SESSION['userlogin'];
 $user_login_id = $array_user['user_id'];
-//echo "<br>" . $user_login_id . "<br>";
+
 
 // Check if form is submitted for user update, then redirect to homepage after update
 if (isset($_POST['update'])) {
