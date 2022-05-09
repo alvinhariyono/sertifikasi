@@ -32,6 +32,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM stok ORDER BY stok_id ASC");
             <th>nama peminjam</th>
             <th>tanggal peminjaman</th>
             <th>tanggal pengembalian</th>
+            <th>no admin pengurus</th>
         </tr>
         <?php
         while ($book_data = mysqli_fetch_array($result)) {
@@ -43,6 +44,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM stok ORDER BY stok_id ASC");
             echo "<td>" . $book_data['stok_peminjam'] . "</td>";
             echo "<td>" . $book_data['tanggal_peminjaman'] . "</td>";
             echo "<td>" . $book_data['tanggal_pengembalian'] . "</td>";
+            echo "<td>" . $book_data['user_id'] . "</td>";
             echo "<td> <a href='pinjam.php?stok_id=$book_data[stok_id]'>Pinjam</a>|<a href='kembalikan.php?stok_id=$book_data[stok_id]'>Kembalikan</a> |<a href='edit.php?stok_id=$book_data[stok_id]'>Edit</a> | <a href='delete.php?stok_id=$book_data[stok_id]'>Delete</a></td></tr>";
         }
         ?>
